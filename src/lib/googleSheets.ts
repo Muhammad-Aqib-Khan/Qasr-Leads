@@ -15,7 +15,7 @@ async function getSheetsInstance() {
             scopes: SCOPES,
         });
         return google.sheets({ version: "v4", auth });
-    } catch (error) {
+    } catch {
         throw new Error("Failed to parse GOOGLE_CREDS. Ensure it is a valid JSON string.");
     }
 }
