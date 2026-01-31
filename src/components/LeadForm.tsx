@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -37,7 +37,7 @@ export default function LeadForm() {
                 setStatus("error");
                 setMessage(data.error || "Something went wrong. Please try again.");
             }
-        } catch (err) {
+        } catch {
             setStatus("error");
             setMessage("Failed to connect to the Royal Court.");
         }

@@ -89,7 +89,7 @@ export default function Home() {
             </div>
 
             <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-opensans leading-relaxed">
-              Don't just wear fashion. Command it. Join the elite who define Pakistani elegance. Your throne awaits.
+              Don&apos;t just wear fashion. Command it. Join the elite who define Pakistani elegance. Your throne awaits.
             </p>
           </motion.div>
 

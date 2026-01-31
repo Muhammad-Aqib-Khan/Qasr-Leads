@@ -28,12 +28,11 @@ export async function POST(req: Request) {
             { message: "Welcome to the Royal Court 👑" },
             { status: 200 }
         );
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Lead submission error:", error);
 
-        // Check for custom error message from addLead
-        const errorMessage = error.message || "Something went wrong. Please try again later.";
-        const status = error.message.includes("already registered") ? 409 : 500;
+        const errorMessage = error instanceof Error ? error.message : "Something went wrong. Please try again later.";
+        const status = errorMessage.includes("already registered") ? 409 : 500;
 
         return NextResponse.json(
             { error: errorMessage },
