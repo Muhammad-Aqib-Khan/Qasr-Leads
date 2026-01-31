@@ -3,19 +3,30 @@ import { google } from "googleapis";
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 
 async function getSheetsInstance() {
-    const credentials = JSON.parse(process.env.GOOGLE_CREDS || "{}");
+    const credsRaw = process.env.GOOGLE_CREDS;
+    if (!credsRaw) {
+        throw new Error("GOOGLE_CREDS environment variable is missing.");
+    }
 
-    const auth = new google.auth.GoogleAuth({
-        credentials,
-        scopes: SCOPES,
-    });
-
-    return google.sheets({ version: "v4", auth });
+    try {
+        const credentials = JSON.parse(credsRaw);
+        const auth = new google.auth.GoogleAuth({
+            credentials,
+            scopes: SCOPES,
+        });
+        return google.sheets({ version: "v4", auth });
+    } catch (error) {
+        throw new Error("Failed to parse GOOGLE_CREDS. Ensure it is a valid JSON string.");
+    }
 }
 
 export async function addLead(name: string, email: string, whatsapp?: string) {
-    const sheets = await getSheetsInstance();
     const spreadsheetId = process.env.SHEET_ID;
+    if (!spreadsheetId) {
+        throw new Error("SHEET_ID environment variable is missing.");
+    }
+
+    const sheets = await getSheetsInstance();
 
     // 1. Check for duplicates
     const response = await sheets.spreadsheets.values.get({
